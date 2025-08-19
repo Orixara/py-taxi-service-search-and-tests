@@ -2,11 +2,32 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from taxi.forms import (
-    DriverCreationForm, DriverLicenseUpdateForm, validate_license_number
+    DriverCreationForm,
+    DriverLicenseUpdateForm,
+    validate_license_number,
+    DriverSearchForm,
+    CarSearchForm,
+    ManufacturerSearchForm,
 )
 
 
 class FormsTests(TestCase):
+
+    def test_driver_search_form_with_data(self):
+        form = DriverSearchForm(data={"username": "test"})
+        self.assertTrue(form.is_valid())
+
+    def test_driver_search_form_empty(self):
+        form = DriverSearchForm(data={"username": ""})
+        self.assertTrue(form.is_valid())
+
+    def test_car_search_form_with_data(self):
+        form = CarSearchForm(data={"model": "Toyota"})
+        self.assertTrue(form.is_valid())
+
+    def test_manufacturer_search_form_with_data(self):
+        form = ManufacturerSearchForm(data={"name": "BMW"})
+        self.assertTrue(form.is_valid())
 
     def test_validate_license_number_valid(self):
         valid_license = "ABC12345"
